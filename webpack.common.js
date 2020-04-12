@@ -7,40 +7,37 @@ module.exports = {
     entry: {
         main: './src/index.js'
     },
-    output: {
-        filename: '[name].js?[hash]',
-        path: path.resolve('./dist')
-    },
-    devtool: 'source-map',
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: ['/node_modules'],
-                use: [
-                    { 
-                        loader: 'babel-loader' 
-                    }
-                ]
+                use: ['babel-loader']
             },
             {
                 test: /\.s(a|c)ss$/,
-                use: [
+                use: [ 
+                    'style-loader',
+                    'css-loader',
                     {
-                        loader: 'style-loader'
-                    }, 
-                    {
-                        loader: 'css-loader'
-                    }, 
-                    {
-                        loader: 'sass-loader'
-                    }
+                        loader: 'postcss-loader',
+                        options: {
+                          plugins: [
+                            require('autoprefixer')
+                          ]
+                        }
+                    },
+                    'sass-loader'
                 ]
             }
         ]
     },
     resolve: {
         extensions: ['*', '.js', '.jsx', '.sass', '.scss']
+    },
+    output: {
+        filename: '[name].js?[hash]',
+        path: path.resolve('./dist')
     },
     plugins: [
         new CleanWebpackPlugin(),
