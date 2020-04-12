@@ -11,6 +11,7 @@ module.exports = {
         filename: '[name].js?[hash]',
         path: path.resolve('./dist')
     },
+    devtool: 'source-map',
     module: {
         rules: [
             {
@@ -42,10 +43,13 @@ module.exports = {
         extensions: ['*', '.js', '.jsx', '.sass', '.scss']
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            template: 'index.html'
-          }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new HtmlWebPackPlugin(
+            {
+                title: 'React boilerplate Demo test',
+                template: 'index.html'
+            }
+        )
     ]
 }
 
