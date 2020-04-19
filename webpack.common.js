@@ -16,6 +16,44 @@ module.exports = {
         filename: '[name].js?[hash]',
         path: path.resolve('./dist')
     },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: ['/node_modules'],
+                use: ['babel-loader']
+            },
+            {
+                test: /\.s(a|c)ss$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('autoprefixer')
+                            ]
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                            sassOptions: {
+                                outputStyle: 'compressed',
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebPackPlugin(
